@@ -27,7 +27,7 @@ export default function Map(props) {
               ]
             : props.defaultLocation
         }
-        // zoom={props.locationData ? 10 : 8}
+        // zoom={props.locationData ? 10 : 8} 
         zoom={10}
         scrollWheelZoom={true}
         style={{ width: "100%", height: "100%" }}
