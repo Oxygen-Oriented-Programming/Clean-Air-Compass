@@ -1,4 +1,3 @@
-import React from "react";
 import RightNavSummary from "./RightNavSummary";
 import Link from "next/link";
 

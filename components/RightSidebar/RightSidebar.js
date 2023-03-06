@@ -1,4 +1,3 @@
-import React from "react";
 import RightSidebarButton from "./RightSidebarButton";
 import RightNavTitle from "./RightNavTitle";
 import RightNavLinks from "./RightNavLinks";
