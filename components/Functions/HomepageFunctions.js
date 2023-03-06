@@ -62,7 +62,6 @@ export const handleSubmit = async (
   inputRef,
   setMessage,
   setLoading,
-  fly_animation,
   setLocationData,
   map
 ) => {
