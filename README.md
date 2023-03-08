@@ -2,7 +2,7 @@
 
 ### _Oliver Speir_ / _Harper Foley_ / _Jason Christopher_ / _Dennis Nichols_ / _DeShon Dixon_
 
-<img width="791" alt="clean-air-compass logo" src="">
+<img width="791" alt="clean-air-compass logo" src="public/logo.png">
 
 ## Overview
 
@@ -23,19 +23,15 @@ Our site will provide an interactive spatially interpolated map of air quality i
 
 ### UML documentation requirements
 
-![Whiteboard Image](./images/DIAGRAM.PNG)
+![Whiteboard Image](https://i.imgur.com/gXW0tAG.png)
 
 ---
 
-## Instructions for local deployment and packages needed
+### PM2.5 Chart
 
--
+<img width="791" alt="clean-air-compass logo" src="public/faqChart.png">
 
 ---
-
-## Resources
-
--
 
 ## Team LinkedIn
 

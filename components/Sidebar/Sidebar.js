@@ -1,17 +1,20 @@
-import React from 'react';
-import Link from 'next/link';
-import Form from './Form';
-import NavLinks from './NavLinks';
-import NavTitle from './NavTitle';
-import SetDefaultLocation from './SetDefaultLocation';
-import { useState } from 'react';
-import About from './About';
-import Features from './Features';
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+import SearchForm from "./SearchForm";
+import AboutFeaturesButtons from "./Buttons/AboutFeaturesButtons";
+import SideBarTitle from "./SideBarTitle";
+import About from "./About";
+import Features from "./Features";
+import HideSidebarButton from "./Buttons/HideSidebarButton";
+import Login from "./Login";
+import AlertModalButton from "./Buttons/AlertModalButton";
+import LocationModalButton from "./Buttons/LocationModalButton";
 
 export default function Sidebar(props) {
   const [showFeatures, setShowFeatures] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [returnAnimation, setReturnAnimation] = useState(false);
+  const { data: session, status } = useSession();
 
   const handleFeaturesClick = () => {
     setShowFeatures(true);
@@ -34,57 +37,47 @@ export default function Sidebar(props) {
 
   return (
     <>
-      <div className='h-screen bg-black'>
+      <div className="h-screen bg-black">
         <div
           className={
             showFeatures || showAbout
-              ? 'min-h-screen w-72 px-2 space-y-2.5 text-white bg-black inset-y-0 relative transition duration-200 ease-in-out'
-              : 'w-72 px-2 space-y-2.5 text-white inset-y-0 relative bg-black transition duration-200 ease-in-out'
+              ? "min-h-screen w-72 px-2 space-y-2.5 text-white bg-black inset-y-0 relative transition duration-200 ease-in-out"
+              : "w-72 px-2 space-y-2.5 text-white inset-y-0 relative bg-black transition duration-200 ease-in-out"
           }
         >
-          <NavTitle />
-          <button
-            className='fixed mr-5 text-purple-500 border-white rounded-md left-56 top-1'
-            onClick={() => props.set_show(!props.sidebar_show)}
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={1.5}
-              stroke='currentColor'
-              className='fixed z-40 w-6 h-6 left-64'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z'
-              />
-            </svg>
-          </button>
-
-          <div className='flex flex-col'>
+          <SideBarTitle />
+          {/* ShowSidebarButton opens the sidebar when it is collapsed */}
+          <HideSidebarButton
+            set_show={props.set_show}
+            sidebar_show={props.sidebar_show}
+          />
+          <div className="flex flex-col">
             <nav
-              className='space-y-1'
+              className="space-y-1"
               style={{
                 transform:
                   showFeatures || showAbout
-                    ? 'translateY(-100%)'
-                    : 'translateY(0%)',
+                    ? "translateY(-100%)"
+                    : "translateY(0%)",
                 opacity: showFeatures || showAbout ? 0 : 1,
-                height: showFeatures || showAbout ? 0 : 'auto',
-                overflow: 'hidden',
-                transition: 'all 0.5s ease-in-out',
-                transitionDelay: showFeatures || showAbout ? '0.5s' : '0s',
+                height: showFeatures || showAbout ? 0 : "auto",
+                overflow: "hidden",
+                transition: "all 0.5s ease-in-out",
+                transitionDelay: showFeatures || showAbout ? "0.5s" : "0s",
               }}
             >
-              <Form
+              <SearchForm
                 loading={props.loading}
-                handleLocationInput={props.handleLocationInput}
                 handleSubmit={props.handleSubmit}
+                inputRef={props.inputRef}
+                setMessage={props.setMessage}
+                setLoading={props.setLoading}
+                setLocationData={props.setLocationData}
+                map={props.map}
               />
+              {/* this shows the features and about buttons */}
               {!showFeatures && !showAbout && (
-                <NavLinks
+                <AboutFeaturesButtons
                   handleFeaturesClick={handleFeaturesClick}
                   handleAboutClick={handleAboutClick}
                   handleReturnClick={handleReturnClick}
@@ -93,8 +86,7 @@ export default function Sidebar(props) {
               )}
             </nav>
 
-            {/* Features section */}
-
+            {/* this shows the features page in side bar if features button is clicked */}
             {showFeatures && (
               <Features
                 handleReturnClick={handleReturnClick}
@@ -104,7 +96,7 @@ export default function Sidebar(props) {
               />
             )}
 
-            {/* About section */}
+            {/* this shows the about page in side bar if about button is clicked */}
             {showAbout && (
               <About
                 handleReturnClick={handleReturnClick}
@@ -112,6 +104,16 @@ export default function Sidebar(props) {
                 showAbout={showAbout}
               />
             )}
+            {/* this shows the alerts & locations button only if the user is logged in  */}
+            {status === "authenticated" && (
+              <>
+                <AlertModalButton toggleAlertModal={props.toggleAlertModal} />
+                <LocationModalButton
+                  toggleLocationModal={props.toggleLocationModal}
+                />
+              </>
+            )}
+            <Login />
           </div>
         </div>
       </div>
