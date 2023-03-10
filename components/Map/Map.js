@@ -51,8 +51,8 @@ export default function Map(props) {
               style={(feature) => ({
                 color: getFillColor2(feature.properties["pm2.5"]),
                 weight: 0,
-                opacity: 0.05 !important,
-                fillOpacity: 0.05 !important,
+                opacity: 0.05,
+                fillOpacity: 0.05,
                 fillColor: getFillColor2(feature.properties["pm2.5"]),
               })}
               onEachFeature={onEachFeature}
